@@ -38,10 +38,11 @@ export default class App extends Component {
     return this.state.feed.map((item, index) => {
       return (
         <div className="slide" key={`video-${item.aweme_id}`}>
-          <div className="author">
+          <div className="author animated wobble">
             <img className="avatar" src={item.author.avatar_thumb.url_list[0]} />
             <div>
               <div className="name">@{item.author.unique_id}</div>
+              <div className="song">🎵 {item.music.title}</div>
               <div className="desc">{item.desc}</div>
             </div>
           </div>
@@ -64,6 +65,8 @@ export default class App extends Component {
       vertical: true,
       dragging: false,
       withoutControls: true,
+      heightMode: 'first',
+      initialSlideHeight: window.innerHeight,
       beforeSlide: (currentSlide, nextSlide) => {
         this.setState({ [`playing${currentSlide}`]: false })
       },

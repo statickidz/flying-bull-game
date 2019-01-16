@@ -8,7 +8,16 @@ body {
   overflow: hidden;
 }
 
+.slider-frame {
+  height: 100vh !important;
+}
+
 .slide {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left:0;
+  top:0;
   .author {
     display: flex;
     align-items: center;
@@ -16,27 +25,33 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 99999 !important;
+    z-index: 9998;
     .avatar {
       width: 90px;
       height: 90px;
       padding-right: 1rem;
     }
-    .name {
+    .name, .song, .desc {
       color: white;
+      text-shadow: 1px 1px 2px black;
+      padding-bottom: .5rem;
+    }
+    .name {
       font-size: 1.7rem;
       letter-spacing: 1px;
-      text-shadow: 1px 1px 2px black; 
+    }
+    .song {
+      font-size: .7rem;
+      text-transform: uppercase;
     }
     .desc {
-      color: white;
       font-size: .8rem;
-      text-shadow: 1px 1px 2px black; 
     }
   }
   .video {
     width: auto !important;
     height: 100vh !important;
-    display: block;
+    min-width: 100%;
+    z-index: 9997;
   }
 }
