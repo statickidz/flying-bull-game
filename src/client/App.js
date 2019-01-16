@@ -27,7 +27,7 @@ export default class App extends Component {
   }
 
   onVideoEnded = (index) => {
-    if (index === 4) {
+    if (index === (this.state.feed.length-1)) {
       this.loadFeed()
     } else {
       this.refs.slider.nextSlide()
