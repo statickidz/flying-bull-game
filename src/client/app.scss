@@ -1,3 +1,5 @@
+@import "reset";
+
 body {
   font-family: 'Roboto Mono', monospace;
   padding: 0;
@@ -7,7 +9,6 @@ body {
 }
 
 .slide {
-  position: relative;
   .author {
     display: flex;
     align-items: center;
@@ -15,10 +16,10 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 1;
+    z-index: 99999 !important;
     .avatar {
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
       padding-right: 1rem;
     }
     .name {
@@ -37,6 +38,5 @@ body {
     width: auto !important;
     height: 100vh !important;
     display: block;
-    z-index: 0;
   }
 }
