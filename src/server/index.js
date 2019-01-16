@@ -33,7 +33,7 @@ app.get('/api/feed', async (req, res) => {
 
   const api = new TikTokAPI(params, { signURL });
 
-  await api.listForYouFeed()
+  await api.listForYouFeed({pull_type: 'LoadMore'})
     .then(response => res.send({ feed: response.data.aweme_list }))
     .catch(console.log);
 });

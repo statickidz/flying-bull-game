@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import './app.scss'
 import ReactPlayer from 'react-player'
 import Carousel from 'nuka-carousel'
+import numeral from 'numeral'
+import './app.scss'
 
 export default class App extends Component {
   state = {
@@ -20,9 +21,14 @@ export default class App extends Component {
   loadFeed() {
     fetch('/api/feed')
       .then(res => res.json())
-      .then(feed => {
-        console.log(feed)
-        this.setState({ feed: feed.feed })
+      .then(json => {
+        console.log('New JSON', json)
+        if (json.feed.length <= 0) {
+          this.loadFeed()
+        } else {
+          console.log('New Feed', json.feed)
+          this.setState({ feed: json.feed })
+        }
       })
   }
 
@@ -46,12 +52,17 @@ export default class App extends Component {
               <div className="desc">{item.desc}</div>
             </div>
           </div>
+          <div className="heart-container">
+            <div className="heart pulse"></div>
+            <div className="likes">{numeral(item.statistics.digg_count).format('0a')}</div>
+          </div>
           <ReactPlayer
             className="video"
             ref={`video${index}`}
             playing={this.state[`playing${index}`]}
             url={item.video.play_addr.url_list[0]}
             onEnded={() => this.onVideoEnded(index)}
+            onError={(error) => this.refs.slider.nextSlide()}
           />
         </div>
       )

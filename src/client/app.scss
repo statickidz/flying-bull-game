@@ -6,6 +6,8 @@ body {
   background-color: black;
   margin: 0px auto;
   overflow: hidden;
+  background-image: url('bg.png');
+  background-size: cover;
 }
 
 .slider-frame {
@@ -21,15 +23,15 @@ body {
   .author {
     display: flex;
     align-items: center;
-    padding: 3rem;
+    padding: 4rem;
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 9998;
     .avatar {
-      width: 90px;
-      height: 90px;
-      padding-right: 1rem;
+      width: 120px;
+      height: 120px;
+      padding-right: 2rem;
     }
     .name, .song, .desc {
       color: white;
@@ -37,15 +39,16 @@ body {
       padding-bottom: .5rem;
     }
     .name {
-      font-size: 1.7rem;
+      font-size: 2.4rem;
       letter-spacing: 1px;
     }
     .song {
-      font-size: .7rem;
+      font-size: 1.3rem;
       text-transform: uppercase;
+      padding-bottom: .6rem;
     }
     .desc {
-      font-size: .8rem;
+      font-size: 1.3rem;
     }
   }
   .video {
@@ -53,5 +56,68 @@ body {
     height: 100vh !important;
     min-width: 100%;
     z-index: 9997;
+  }
+  .heart-container {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    z-index: 9998;
+    width: 210px;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .likes {
+    color: white;
+    padding: 1.3rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px black;
+  }
+  .heart {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: #ecf0f1;
+    border-radius: 0 0 0 10px;
+    transform: rotate(-45deg);
+    animation: pulse 1s infinite;
+  }
+  .heart::before,
+  .heart::after {
+    position: absolute;
+    content: "";
+    width: 50px;
+    height: 50px;
+    background: #ecf0f1;
+    border-radius: 50%;
+  }
+  .heart::before {
+    top: -25px;
+    left: 0;
+  }
+  .heart::after {
+    top: 0;
+    right: -25px;
+  }
+  @keyframes pulse {
+    0%, 20% {
+      transform: rotate(-45deg) scale(1);
+    }
+    30% {
+      transform: rotate(-45deg) scale(1.2);
+    }
+    50% {
+      transform: rotate(-45deg) scale(1);
+    }
+    60% {
+      transform: rotate(-45deg) scale(1.1);
+    }
+    70%, 100% {
+      transform: rotate(-45deg) scale(1);
+    }
   }
 }
