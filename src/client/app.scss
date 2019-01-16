@@ -1,0 +1,42 @@
+body {
+  font-family: 'Roboto Mono', monospace;
+  padding: 0;
+  background-color: black;
+  margin: 0px auto;
+  overflow: hidden;
+}
+
+.slide {
+  position: relative;
+  .author {
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    .avatar {
+      width: 110px;
+      height: 110px;
+      padding-right: 1rem;
+    }
+    .name {
+      color: white;
+      font-size: 1.7rem;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 2px black; 
+    }
+    .desc {
+      color: white;
+      font-size: .8rem;
+      text-shadow: 1px 1px 2px black; 
+    }
+  }
+  .video {
+    width: auto !important;
+    height: 100vh !important;
+    display: block;
+    z-index: 0;
+  }
+}
