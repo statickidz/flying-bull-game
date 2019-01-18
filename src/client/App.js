@@ -5,13 +5,14 @@ import numeral from 'numeral'
 import './app.scss'
 
 export default class App extends Component {
+
+  interval = null
+  maxVideos = 50
+  minLikes = 70000
+
   state = {
+    loading: true,
     feed: [],
-    playing0: true,
-    playing1: false,
-    playing2: false,
-    playing3: false,
-    playing4: false,
   }
 
   componentDidMount() {
@@ -19,25 +20,31 @@ export default class App extends Component {
   }
 
   loadFeed() {
-    fetch('/api/feed')
-      .then(res => res.json())
-      .then(json => {
-        console.log('New JSON', json)
-        if (json.feed.length <= 0) {
-          this.loadFeed()
-        } else {
-          console.log('New Feed', json.feed)
-          this.setState({ feed: json.feed })
-        }
-      })
+    this.interval = setInterval(() => {
+      if (this.state.feed.length < this.maxVideos) {
+        fetch('/api/feed')
+          .then(res => res.json())
+          .then(json => {
+            console.log('New JSON', json)
+            let feed = json.feed
+              .filter(video => video.statistics.digg_count > this.minLikes)
+              .filter(video => video.music.source_platform === 72)
+            console.log('Filtered Feed', feed)
+            feed.map((video, i) => (this.state.feed.length === 0 && i === 0) ?
+              video.playing = true : video.playing = false
+            )
+            //this.setState({ feed: this.state.feed.concat(feed) })
+            this.setState({ feed: [...this.state.feed, ...feed] })
+          })
+      } else {
+        clearInterval(this.interval)
+        this.setState({ loading: false })
+      }
+    }, 2000)
   }
 
   onVideoEnded = (index) => {
-    if (index === (this.state.feed.length-1)) {
-      this.loadFeed()
-    } else {
-      this.refs.slider.nextSlide()
-    }
+    this.refs.slider.nextSlide()
   }
 
   renderSlides = () => {
@@ -45,24 +52,45 @@ export default class App extends Component {
       return (
         <div className="slide" key={`video-${item.aweme_id}`}>
           <div className="author animated wobble">
-            <img className="avatar" src={item.author.avatar_thumb.url_list[0]} />
+            <img
+              className="avatar"
+              src={item.author.avatar_thumb.url_list[0]}
+              onClick={() => this.refs.slider.nextSlide()}
+            />
             <div>
               <div className="name">@{item.author.unique_id}</div>
               <div className="song">🎵 {item.music.title}</div>
               <div className="desc">{item.desc}</div>
             </div>
           </div>
-          <div className="heart-container">
+          <div
+            className="heart-container"
+            onClick={() => this.setState({
+              feed: this.state.feed.map((video, i) => 
+                index === i ? { ...video, playing: !item.playing } : video
+              )
+            })}
+          >
             <div className="heart pulse"></div>
             <div className="likes">{numeral(item.statistics.digg_count).format('0a')}</div>
           </div>
+          <div
+            className="progress-bar"
+            style={{width: `${item.playedSeconds*100/(item.video.duration/100)*10}%`}}
+          />
           <ReactPlayer
             className="video"
             ref={`video${index}`}
-            playing={this.state[`playing${index}`]}
+            volume={0.1}
+            playing={this.state.feed[index].playing}
             url={item.video.play_addr.url_list[0]}
             onEnded={() => this.onVideoEnded(index)}
             onError={(error) => this.refs.slider.nextSlide()}
+            onProgress={(state) => this.setState({
+              feed: this.state.feed.map((video, i) => 
+                index === i ? { ...video, playedSeconds: state.playedSeconds } : video
+              )
+            })}
           />
         </div>
       )
@@ -79,18 +107,34 @@ export default class App extends Component {
       heightMode: 'first',
       initialSlideHeight: window.innerHeight,
       beforeSlide: (currentSlide, nextSlide) => {
-        this.setState({ [`playing${currentSlide}`]: false })
+        this.setState({
+          feed: this.state.feed.map((video, i) => 
+            currentSlide === i ? { ...video, playing: false } : video
+          )
+        })
       },
       afterSlide: (currentSlide) => {
-        this.setState({ [`playing${currentSlide}`]: true })
+        this.setState({
+          feed: this.state.feed.map((video, i) => 
+            currentSlide === i ? { ...video, playing: true } : video
+          )
+        })
       }
     }
 
     return (
       <div>
-        <Carousel ref="slider" {...settings}>
-          {this.renderSlides()}
-        </Carousel>
+        {this.state.loading ?
+          <div className="loading">
+            <div>Cargando</div>
+            <div>{this.state.feed.length}/{this.maxVideos}</div>
+            <div className="spinner"></div>
+          </div>
+        :
+          <Carousel ref="slider" {...settings}>
+            {this.renderSlides()}
+          </Carousel>
+        }
       </div>
     )
   }

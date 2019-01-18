@@ -10,6 +10,51 @@ body {
   background-size: cover;
 }
 
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  height: 100vh;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 45px auto;
+  background-color: white;
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
 .slider-frame {
   height: 100vh !important;
 }
@@ -23,14 +68,14 @@ body {
   .author {
     display: flex;
     align-items: center;
-    padding: 4rem;
+    padding: 5rem;
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 9998;
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       padding-right: 2rem;
     }
     .name, .song, .desc {
@@ -39,16 +84,16 @@ body {
       padding-bottom: .5rem;
     }
     .name {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       letter-spacing: 1px;
     }
     .song {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       text-transform: uppercase;
       padding-bottom: .6rem;
     }
     .desc {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
   }
   .video {
@@ -57,10 +102,19 @@ body {
     min-width: 100%;
     z-index: 9997;
   }
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: .2rem;
+    z-index: 9998;
+    background-color: rgba(255, 255, 255, 1);
+    transition: width .200s;
+  }
   .heart-container {
     position: absolute;
-    top: 25px;
-    right: 0;
+    top: 35px;
+    right: 15px;
     z-index: 9998;
     width: 210px;
     height: 210px;
