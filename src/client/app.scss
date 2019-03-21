@@ -6,7 +6,7 @@ body {
   background-color: black;
   margin: 0px auto;
   overflow: hidden;
-  background-image: url('bg.png');
+  background-image: url('bg3.png');
   background-size: cover;
 }
 
@@ -22,7 +22,8 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 3rem;
+  text-shadow: 0px 5px 10px black;
+  font-size: 4rem;
   height: 100vh;
 }
 

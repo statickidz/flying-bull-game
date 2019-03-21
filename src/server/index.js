@@ -20,11 +20,16 @@ const params = getRequestParams({
   fp: '<device_fingerprint>',
   iid: '<install_id>',
   openudid: '<device_open_udid>',
-  app_language: 'en',
+  /*app_language: 'en',
   language: 'en',
   region: 'US',
   sys_region: 'US',
-  carrier_region: 'US',
+  carrier_region: 'US',*/
+  app_language: 'es',
+  language: 'es',
+  region: 'ES',
+  sys_region: 'ES',
+  carrier_region: 'ES',
   timezone_name: 'Europe/Madrid',
 });
 /*const params = getRequestParams({

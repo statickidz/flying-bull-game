@@ -7,8 +7,9 @@ import './app.scss'
 export default class App extends Component {
 
   interval = null
-  maxVideos = 50
-  minLikes = 70000
+  maxVideos = 10
+  minLikes = 10
+  tag = ''
 
   state = {
     loading: true,
@@ -29,6 +30,16 @@ export default class App extends Component {
             let feed = json.feed
               .filter(video => video.statistics.digg_count > this.minLikes)
               .filter(video => video.music.source_platform === 72)
+              .filter(video => {
+                if (this.tag && this.tag !== '') {
+                  if (video.music.title.toLowerCase().includes(this.tag)) {
+                    return true
+                  }
+                } else {
+                  return true
+                }
+                return false
+              })
             console.log('Filtered Feed', feed)
             feed.map((video, i) => (this.state.feed.length === 0 && i === 0) ?
               video.playing = true : video.playing = false
