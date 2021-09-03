@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <title>Flying Bull</title>
+
+    <script type="text/javascript" src="src/engine/cocoon.js"></script>
+    <script type="text/javascript" src="src/game/config.js"></script>
+    <script type="text/javascript" src="src/engine/core.js"></script>
+    <script type="text/javascript" src="src/game/main.js"></script>
+
+    <script>
+      function shareOnTwitter(score) {
+        CocoonJS.App.openURL(
+          "twitter://post?message=He%20conseguido%20hacer%20" +
+            score +
+            "%20puntos%20en%20%23FlyingBull.%20Descargalo%20gratis%20para%20iOS%20http%3A%2F%2Fgoo.gl%2FIdeTDd%20o%20Android%20http%3A%2F%2Fgoo.gl%2FLzyYYE&in_reply_to_status_id=462508285321441280"
+        );
+      }
+
+      function shareOnFacebook(score) {
+        CocoonJS.App.openURL(
+          "https://www.facebook.com/sharer/sharer.php?m2w&s=100&p%5Burl%5D=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.statickidz.flyingbull&p%5Bimages%5D%5B0%5D=http%3A%2F%2Fimg.imgur.com%2FL1y0o8t.png&p%5Btitle%5D=Flying%20Bull&p%5Bsummary%5D=He%20conseguido%20hacer%20" +
+            score +
+            "%20puntos%20en%20Flying%20Bull"
+        );
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
